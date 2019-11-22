@@ -6,7 +6,7 @@ Kali Linux
 
 ## Install
 ```
-# git clone https://github.com/LeuvaApurv/speed_up_kali_update.sh
+# git clone https://github.com/LeuvaApurv/speed_up_kali_update
 # cd speed_up_kali_update
 ```
 ## Usage
