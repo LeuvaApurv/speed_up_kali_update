@@ -11,6 +11,7 @@ sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
 sudo touch /etc/apt/sources.list
 echo
 echo "[+] Add best Kali linux repositories in sources.list"
+echo
 echo "# speed_up_kali_update.sh - By Leuva Apurv" | sudo tee -a /etc/apt/sources.list
 echo "deb http://kali.download/kali kali-rolling main contrib non-free" | sudo tee -a /etc/apt/sources.list
 echo
