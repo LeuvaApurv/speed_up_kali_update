@@ -15,7 +15,7 @@ echo "# speed_up_kali_update.sh - By Leuva Apurv" | sudo tee -a /etc/apt/sources
 echo "deb http://kali.download/kali kali-rolling main contrib non-free" | sudo tee -a /etc/apt/sources.list
 echo
 echo "[+] Update oand Upgrade Kali Linux"
-exho
+echo
 sudo apt clean
 sudo apt update && apt upgrade -y && apt dist-upgrade -y
 echo
