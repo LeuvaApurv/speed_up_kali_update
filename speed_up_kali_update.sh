@@ -1,7 +1,7 @@
 echo
 echo "------------------------------------------------------------------------------"
 echo "#########          speed_up_kali_update.sh - By Leuva Apurv          #########"
-echo "#####       https://github.com/LeuvaApurv/speed_up_kali_update.sh        #####"
+echo "#####       https://github.com/LeuvaApurv/speed_up_kali_update           #####"
 echo "------------------------------------------------------------------------------"
 echo
 echo "-------------------- Speed up Kali Linux Update ---------------------"
@@ -15,9 +15,9 @@ echo
 echo "# speed_up_kali_update.sh - By Leuva Apurv" | sudo tee -a /etc/apt/sources.list
 echo "deb http://kali.download/kali kali-rolling main contrib non-free" | sudo tee -a /etc/apt/sources.list
 echo
-echo "[+] Update oand Upgrade Kali Linux"
+echo "[+] Update and Upgrade Kali Linux"
 echo
 sudo apt clean
-sudo apt update && apt upgrade -y && apt dist-upgrade -y
+sudo apt update && sudo apt upgrade -y && sudo apt dist-upgrade -y
 echo
 echo "--------------- Suceessfullly Update your Kali Linux ----------------"
