@@ -1,6 +1,4 @@
 #!bin/bash
-
-#colors
      
 reset='\033[0m'       # Text Reset
 hv='\033[05m'	      # blink
@@ -11,8 +9,9 @@ yellow='\e[1;33m'
 blue='\e[1;34m'
 orange='\e[38;5;166m'
 
-#Check Root
-
+##############
+# Check Root #
+##############
 if [ $(id -u) != "0" ]; then
    echo
    echo -e "$red" "[ X ]::[NOT root]: You need to be [root] to run this script. "$green" [use SUDO]"
@@ -21,7 +20,9 @@ if [ $(id -u) != "0" ]; then
    exit
 fi
 
-#First check of setup for internet connection by connecting to google over http
+##################################################################################
+# First check of setup for internet connection by connecting to google over http #
+##################################################################################
 echo
 echo -e "$yellow" "[ * ] Checking for internet connection"
 echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
@@ -30,6 +31,7 @@ if [ $? -ne 0 ]; then
    echo
    echo -e "$red" "[ X ]::[Internet Connection]: OFFLINE!"
    sleep 2
+   exit
 else
    echo
    echo -e "$green" "[ ✔ ]::[Internet Connection]: CONNECTED!"
@@ -83,9 +85,8 @@ case "$h" in
    echo 
    sudo fping -c 3 -q -f domain.tmp
    echo
-   echo -en "$yellow[ + ] Choose Fastest Mirror [default:$blue kali.download $yellow] (y/n) ? : " 
-   read apurv
-   
+   echo -en "$yellow[ + ] Choose Default Fastest Mirror [$blue kali.download $yellow] ? : " 
+   select apurv in "Yes or y" "No or n"; do
    case "$apurv" in 
    
    y|Y|yes|Yes|YES) domain="https://kali.download/kali"
