@@ -148,7 +148,7 @@ case "$h" in
    echo
    sudo rm -f domain.tmp kali_repo.tmp mirror.tmp extra_mirror.tmp final.tmp
    exit
-;;
+   ;;
 
 2) echo
    echo -e "$blue[ ✔ ] Updating ..."
