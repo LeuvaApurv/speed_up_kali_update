@@ -1,5 +1,5 @@
 #!bin/bash
-     
+
 reset='\033[0m'       # Text Reset
 hv='\033[05m'	      # blink
 purple='\033[1;35m'
@@ -15,7 +15,7 @@ orange='\e[38;5;166m'
 if [ $(id -u) != "0" ]; then
    echo
    echo -e "$red" "[ X ]::[NOT root]: You need to be [root] to run this script. "$green" [use SUDO]"
-   echo   
+   echo
    sleep 1
    exit
 fi
@@ -55,70 +55,76 @@ echo " 2) Update git"
 echo " 3) About"
 echo " 4) Exit"
 echo
-echo -e "$blue ______________________"
+echo -e "$blue --------------------------"
 echo
 echo -en "$yellow" "Pick your Option : "
 read  h
 
 case "$h" in
 
-1) echo
-   echo
-   echo -e "$blue[ ✔ ] Download mirror list form official kali website"
-   echo 
-   echo -e "$green[ * ] Getting mirror list$purple"
-   echo
-   curl "https://http.kali.org/README.mirrorlist" > kali_repo.tmp
-   sleep 1
-   grep -oP '>https://\S+kali' kali_repo.tmp | sort  | uniq > extra_mirror.tmp
-   sleep 1
-   sed "s/^>//" extra_mirror.tmp > mirror.tmp
-   echo
-   echo -e "$blue[ ✔ ] Found a lists of mirrors site$green"
-   echo
-   cat mirror.tmp | awk -F/ '{print $3}' > domain.tmp
-   echo -e "$blue[ ✔ ] Backup orignal sources.list to sources.list.bak and create new sources.list" 
-   sudo mv /etc/apt/sources.list /etc/apt/sources.list.backup
-   sudo touch /etc/apt/sources.list
-   echo
-   echo -e "$green[ * ] Finding the best latency $yellow{ This could take some Time PLEASE WAIT }$purple"
-   echo 
-   sudo fping -c 3 -q -f domain.tmp
-   echo
-   echo -en "$yellow[ + ] Choose Default Fastest Mirror [$blue kali.download $yellow] ? : " 
-   select apurv in "Yes or y" "No or n"; do
-   case "$apurv" in 
-   
-   y|Y|yes|Yes|YES) domain="https://kali.download/kali"
-   ;;
+1)
+  echo
+  echo
+  echo -e "$blue[ ✔ ] Download mirror list form official kali website"
+  echo
+  echo -e "$green[ * ] Getting mirror list$purple"
+  echo
+  curl "https://http.kali.org/README.mirrorlist" > kali_repo.tmp
+  sleep 1
+  grep -oP '>https://\S+kali' kali_repo.tmp | sort  | uniq > extra_mirror.tmp
+  sleep 1
+  sed "s/^>//" extra_mirror.tmp > mirror.tmp
+  echo
+  echo -e "$blue[ ✔ ] Found a lists of mirrors site$green"
+  echo
+  cat mirror.tmp | awk -F/ '{print $3}' > domain.tmp
+  echo -e "$blue[ ✔ ] Backup orignal sources.list to sources.list.bak and create new sources.list"
+  sudo mv /etc/apt/sources.list /etc/apt/sources.list.backup
+  sudo touch /etc/apt/sources.list
+  echo
+  echo -e "$green[ * ] Finding the best latency $yellow{ This could take some Time PLEASE WAIT }$purple"
+  echo
+  sudo fping -c 3 -q -f domain.tmp
+  echo
+  echo -e "$blue -----------------------------------------------------------------------"
+  echo
+  echo -e "$green" "1) Use deafult Fastest Mirror site [$blue kali.download $green]"
+  echo " 2) Chosee another Mirror site from List"
+  echo
+  echo -e "$blue ------------------------------------------------------------------------"
+  echo
+  echo -en "$yellow" "Pick your Option : "
+  read apurv
+  case "$apurv" in
 
-   n|N|no|No|NO) echo -e "$green"
-		 nl -b a domain.tmp
-		 echo
-		 echo -en "$yellow[ + ] Choose Mirror site Number from list : " 
-		 read num
-		 line=$(< domain.tmp  wc -l)
-		 if ! [[ "$num" =~ ^[1-9]+$ ]]; then
-			echo
-			echo -e "$red[ X ] Sorry Natural Numbers Only"
-			echo
-			exit	
-		 fi
-		 if  [[ "$num" -lt 1 || "$num" -gt "$line" ]]; then
-			 echo
-		 	echo -e "$red[ X ] Not Allow $green{Only 1 to $line Number Allow}"
-		 	echo
-		 	exit			
-		 fi
-		 echo
-		 domain=$(sed "$num!d" mirror.tmp)
-   ;;
+   1)domain="https://kali.download/kali"
+	break;;
 
-   *) echo
-      echo -e "$red[ X ] Invalid"
-      exit
-   ;;
+   2)echo -e "$green"
+	nl -b a domain.tmp
+	echo
+	echo -en "$yellow[ + ] Choose Mirror site Number from list : "
+	read num
+	line=$(< domain.tmp  wc -l)
+	if ! [[ "$num" =~ ^[1-9]+$ ]]; then
+		echo
+		echo -e "$red[ X ] Sorry Natural Numbers Only"
+		echo
+		exit
+	fi
+	if  [[ "$num" -lt 1 || "$num" -gt "$line" ]]; then
+		echo
+		echo -e "$red[ X ] Not Allow $green{Only 1 to $line Number Allow}"
+		echo
+		exit
+	fi
+	echo
+	domain=$(sed "$num!d" mirror.tmp)
+   	break;;
 
+   *)echo
+	echo -e "$red[ X ] Invalid"
+	exit;;
    esac
 
    echo
@@ -134,7 +140,7 @@ case "$h" in
    echo
    sudo rm -f /var/lib/dpkg/lock-frontend
    sudo rm -f /var/cache/apt/archives/lock
-   sudo apt clean 
+   sudo apt clean
    sudo apt autoremove -y
    sudo apt update
    echo -e "$green"
@@ -142,7 +148,7 @@ case "$h" in
    sudo apt dist-upgrade -y
    echo
    echo -e "$yellow[ ✔✔ ] Suceessfully Update your Kali Linux "
-   echo 
+   echo
    echo
    echo -e "$orange" "Creator Of This Script ->> $red $hv  *** Leuva Apurv  *** $reset"
    echo
@@ -174,14 +180,14 @@ case "$h" in
    exit
 ;;
 
-4) echo 
+4) echo
    echo -e "$red $hv Bye Bye..!!"
    echo -e "$reset"
    exit
 ;;
 
 *) echo -e "$red[ X ] Invalid"
-   echo 
+   echo
    exit
 ;;
 
